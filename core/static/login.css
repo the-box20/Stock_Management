@@ -1,0 +1,129 @@
+/* Login Style */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(45deg, #fff, #e2e7e7);
+    overflow: hidden;
+}
+.container {
+    position: relative;
+    width: 380px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    transform: translateY(50px);
+    opacity: 0;
+    animation: slideUp 0.8s forwards;
+}
+
+@keyframes slideUp {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+h2{
+    text-align: center;
+    font-weight: 400;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-bottom: 2px solid #ddd;
+    outline: none;
+    font-size: 16px;
+    transition: 0.3s;
+    background: transparent;
+}
+
+.form-group label {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    font-size: 16px;
+    color: #666;
+    pointer-events: none;
+    transition: 0.3s;
+}
+
+.form-group input:focus ~ label,
+.form-group input:valid ~ label {
+    top: -18px;
+    left: 0;
+    font-size: 12px;
+    color: #2980b9;
+}
+
+.form-group input:focus,
+.form-group input:valid {
+    border-color: #2980b9;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, #2980b9, #2967b9);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    transform: scale(1);
+}
+
+button:hover {
+    background: linear-gradient(45deg, #297fb9c2, #2980b9);
+    transform: scale(1.02);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.additional-links {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.additional-links a {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.additional-links a:hover {
+    color: #4ecdc4;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+    transition: 0.3s;
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 90%;
+        padding: 30px;
+    }
+}
+

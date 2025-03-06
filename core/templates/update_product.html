@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Product</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+    <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Update Product</h2><br><br>
+        <form id="updateProductForm" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="product_code" id="productCode" value="{{ form.product_code.value }}" class="form-control" required>
+                <label for="id_product_code">Product Code:</label>
+            </div>
+            <div class="form-group">
+                <input type="text" name="description" id="description" value="{{ form.description.value }}" class="form-control" required>
+                <label for="id_description">Description:</label>
+            </div>
+            <div class="form-group">
+                <input type="number" name="quantity" id="quantity" value="{{ form.quantity.value }}" class="form-control" required>
+                <label for="id_quantity">Quantity:</label>
+            </div>
+            <div class="form-group">
+                <input type="number" step="0.01" name="unit_price" id="unitPrice" value="{{ form.unit_price.value }}" class="form-control" required>
+                <label for="id_unit_price">Unit Price:</label>
+            </div>
+            <button type="submit">Update</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('updateProductForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            fetch("{% url 'update_product' product.id %}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(() => {
+                        window.location.href = "{% url 'dashboard' %}";
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred. Please try again.',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+
+</html>
